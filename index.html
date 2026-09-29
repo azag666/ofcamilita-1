@@ -370,6 +370,13 @@
 
         function startClickRegistration() {
             if (isBot()) return;
+            /* Veio do rodízio da pressel (click_id=lead...): usa esse clique na cobrança em vez de
+               registrar um novo, para a venda voltar para a pressel e para o anúncio de origem */
+            const cliqueDaPressel = getQueryParam('click_id');
+            if (cliqueDaPressel && /^lead\d+$/.test(cliqueDaPressel)) {
+                registeredClickId = cliqueDaPressel;
+                return;
+            }
             
             let attempts = 0;
             const maxAttempts = 15;
